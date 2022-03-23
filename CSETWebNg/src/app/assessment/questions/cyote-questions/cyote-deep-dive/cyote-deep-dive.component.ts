@@ -79,6 +79,15 @@ export class CyoteDeepDiveComponent implements OnInit {
   setBlockAnswer(answer_Text){
     
   }
+
+
+  onSelectAnomaly(anomaly){
+    console.log("anomaly changed");
+    console.log(anomaly);
+  this.anomaly = anomaly;    
+
+  }
+
   /**
    * 
    */

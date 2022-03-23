@@ -21,9 +21,9 @@
   SOFTWARE.
 -------------------------->
 <div class="mb-4">
-    <h3>Collect Observables</h3>
+    <h3>Collect Anomalies</h3>
     <h5>
-        Build a list of all observables relevant for this assessment
+        Build a list of all anomalies relevant for this investigation (or assessment). 
     </h5>
 </div>
 
@@ -121,12 +121,12 @@
     width: 100%;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: left; 
   ">
-    <label>Did you observe anything else? </label>
+    <label style="padding-right: 20px;">Did you observe another anomalous event? </label>
 
     <button (click)="onAddAnomaly()" mat-raised-button color="accent">
-        Add Observable
+        Add Anomaly
     </button>
     <!-- matTooltip="Add Observable"
   matTooltipPosition="before" -->

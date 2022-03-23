@@ -793,7 +793,7 @@ export class NavigationService {
       }
     },
     {
-      displayText: 'Collect Observables',
+      displayText: 'Collect Anomalies',
       pageId: 'cyote-collect',
       level: 2,
       path: 'assessment/{:id}/cyote-collect',

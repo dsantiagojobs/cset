@@ -130,12 +130,9 @@
                 <mat-checkbox class="d-block" 
                     [checked]="anomaly.isMultipleNetworkLayers"
                     (change)="onChangeCheckbox(anomaly, 'isMultipleNetworkLayers', $event.checked)" 
-                    name="multipleNetworkLayers">Did the observable event manifest
-                    in
-                    multiple network
-                    layers?</mat-checkbox>
+                    name="multipleNetworkLayers">Did the observable event manifest in multiple Purdue Model for ICS security layers?</mat-checkbox>
                 <mat-form-field *ngIf="anomaly.isMultipleNetworkLayers" class="w-100 d-block mb-4" appearance="fill">
-                    <mat-label>Describe the affected network layers involved</mat-label>
+                    <mat-label>Describe the affected layers involved</mat-label>
                     <textarea autosize [minRows]="3" matInput 
                     [ngModel]="anomaly.multipleNetworkLayersText"
                     (change)="onChangeCheckbox(anomaly, 'multipleNetworkLayersText', $event.checked)" 
@@ -169,7 +166,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <label> What else should <br />be observed? </label>
+                        <label> What else should normally<br />be observed? </label>
                     </td>
                     <td>
                         <mat-form-field class="w-100" appearance="fill">
@@ -201,7 +198,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <label> What else should <br />not be observed? </label>
+                        <label> What else should <br />not normally be observed? </label>
                     </td>
                     <td>
                         <mat-form-field class="w-100" appearance="fill">

@@ -84,6 +84,7 @@ export class CyoteCollectComponent implements OnInit {
   trackByItems(index: number, item: any): number { return item.id; }
 
   onAddAnomaly() {
+    console.log("Calling add");
     let newO: CyoteObservable = {
       assessmentId: this.assessSvc.assessment.id,
       sequence: this.cyoteSvc.anomalies.length + 1,
