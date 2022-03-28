@@ -101,7 +101,8 @@ export class CyoteDeepDiveComponent implements OnInit {
     this.dataSource = new ArrayDataSource(this.anomaly.deepDiveQuestions);
   }
 
-  setBlockAnswer(answer_Text){
+  setBlockAnswer(node, answer_Text){
+    console.log(node);
     
   }
 

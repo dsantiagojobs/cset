@@ -95,7 +95,7 @@
             <button mat-icon-button disabled></button>
             <p class="w-100"><strong>{{node.question_Title}}</strong> {{node.question_Text}} </p>
             <div style="max-width: 200px;">
-                <div class="btn-group btn-group-toggle answer-group" data-toggle="buttons">                    
+                <div class="btn-group btn-group-toggle answer-group" data-toggle="buttons">
                     <button class="extras-button cursor-pointer"  type="button" 
                        (click)="showSupplemental(node)">
                         <svg viewBox="0 0 30 30" style="height: 31px; width: 31px; margin-top: 4px;">
@@ -105,11 +105,11 @@
                         </svg>
                     </button>
                     <label class="btn btn-yes form-check-label" [class.answer-selected]="node.answer_text=='Y'">
-                        <input class="form-check-input" type="radio" autocomplete="off" (click)="setBlockAnswer('Y')"
+                        <input class="form-check-input" type="radio" autocomplete="off" (click)="setBlockAnswer(node,'Y')"
                             tabindex="0" [checked]="node.answer_text === 'Y'">Yes</label>
                     <label class="btn btn-no form-check-label" [class.answer-selected]="node.answer_text=='N'">
                         <input name="" class="form-check-input" type="radio" autocomplete="off"
-                            (click)="setBlockAnswer('N')" tabindex="0" [checked]="">No</label>
+                            (click)="setBlockAnswer(node,'N')" tabindex="0" [checked]="">No</label>
                 </div>
             </div>
         </cdk-tree-node>
@@ -125,7 +125,7 @@
             </button>
             <p class="w-100"><strong>{{node.question_Title}}</strong> {{node.question_Text}} </p>
             <div style="max-width: 200px;">
-                <div class="btn-group btn-group-toggle answer-group" data-toggle="buttons">                    
+                <div class="btn-group btn-group-toggle answer-group" data-toggle="buttons">
                     <button class="extras-button cursor-pointer"  type="button" 
                     (click)="showSupplemental(node)">
                         <svg viewBox="0 0 30 30" style="height: 31px; width: 31px; margin-top: 4px;">
@@ -135,11 +135,11 @@
                         </svg>
                     </button>
                     <label class="btn btn-yes form-check-label" [class.answer-selected]="node.answer_text=='Y'">
-                        <input class="form-check-input" type="radio" autocomplete="off" (click)="setBlockAnswer('Y')"
+                        <input class="form-check-input" type="radio" autocomplete="off" (click)="setBlockAnswer(node,'Y')"
                             tabindex="0" [checked]="node.answer_text === 'Y'">Yes</label>
                     <label class="btn btn-no form-check-label" [class.answer-selected]="node.answer_text=='N'">
                         <input name="" class="form-check-input" type="radio" autocomplete="off"
-                            (click)="setBlockAnswer('N')" tabindex="0" [checked]="">No</label>
+                            (click)="setBlockAnswer(node,'N')" tabindex="0" [checked]="">No</label>
                 </div>
             </div>
         </cdk-tree-node>
