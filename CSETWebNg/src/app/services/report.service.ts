@@ -112,6 +112,13 @@ export class ReportService {
     }
 
     /**
+     * 
+     */
+    getModelContent(modelId: string): any {
+        return this.http.get(this.configSvc.apiUrl + 'maturity/structure?modelId=' + modelId);
+    }
+
+    /**
      * Converts linebreak characters to HTML <br> tag.
      */
     formatLinebreaks(text: string) {
