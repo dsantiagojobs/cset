@@ -26,9 +26,10 @@ import { ActivatedRoute } from '@angular/router';
 import { Answer } from '../../../../../models/questions.model';
 import { CisService } from '../../../../../services/cis.service';
 import { QuestionsService } from '../../../../../services/questions.service';
+import { Utilities } from '../../../../../services/utilities.service';
 
 @Component({
-  selector: 'app-option-block-cis',
+  selector: 'app-option-block-nested',
   templateUrl: './option-block-nested.component.html'
 })
 export class OptionBlockNestedComponent implements OnInit {
@@ -50,6 +51,7 @@ export class OptionBlockNestedComponent implements OnInit {
   constructor(
     public questionsSvc: QuestionsService,
     public cisSvc: CisService,
+    private utilSvc: Utilities,
     private route: ActivatedRoute,
   ) {
 
@@ -66,7 +68,16 @@ export class OptionBlockNestedComponent implements OnInit {
     this.optOther = this.opts?.filter(x => x.optionType != 'radio' && x.optionType != 'checkbox');
 
     // create a random 'name' that can be used to group the radios in this block
-    this.optionGroupName = this.makeId(8);
+    this.optionGroupName = this.utilSvc.makeId(8);
+  }
+
+  /**
+   * Returns a boolean indiating if all of the
+   * options are unselected.
+   */
+  noneChecked(opts) {
+    let n = opts.every(o => !o.selected);
+    return n;
   }
 
   /**
@@ -84,10 +95,35 @@ export class OptionBlockNestedComponent implements OnInit {
     const descendants = this.getDescendants(siblingOptions);
 
     descendants.forEach(desc => {
-      desc.selected = false;
-      desc.answerText = '';
-      desc.freeResponseAnswer = '';
+      //console.log("desc properties (KEY = property name, VALUE = value of property):  ")
+      for(let key in desc)
+      {
+        //console.log("KEY:  "+key+", VALUE:  "+desc[key]);
+        //options are where the radio & checkboxes live within the "desc" data structure
+        if(key === "options" && desc[key] != null && desc[key].length > 0)
+        {
+          var lengthOfOptions = desc[key].length;
+          for(var i = 0; i <= lengthOfOptions; i++)
+          {
+            if(desc[key][""+i+""] != undefined)
+            {
+              //console.log("KEY:  "+key+", VALUE:  "+JSON.stringify(desc[key][""+i+""]));
+              desc[key][""+i+""].selected = false;
+            }
+          }
+        }
 
+        if(key === "answerText" && desc[key] != null)
+        {
+          desc[key] = '';
+        }
+
+        if(key === "freeResponseAnswer" && desc[key] != null)
+        {
+          desc[key] = '';
+        }
+
+      }
       const ans = this.makeAnswer(desc);
       answers.push(ans);
     });
@@ -98,13 +134,36 @@ export class OptionBlockNestedComponent implements OnInit {
   /**
    *
    */
-  changeCheckbox(o, event): void {
+  changeCheckbox(o, event, listOfOptions): void {
     o.selected = event.target.checked;
     var answers = [];
 
+    //don't love the super nested if's but the amount
+    //of redesign to work around it is crazy so sorry
+    //for all the if's
     if (!o.selected) {
       o.freeResponseAnswer = '';
     }
+    else {
+      if (o.optionText.toLowerCase() == 'none of the above') {
+        listOfOptions.forEach(obj => {
+          if (o != obj) {
+            obj.selected = false;
+            answers.push(this.makeAnswer(obj));
+          }
+        });
+      }
+      else {
+        listOfOptions.forEach(obj => {
+          if (obj.optionText.toLowerCase() == 'none of the above') {
+            obj.selected = false;
+            answers.push(this.makeAnswer(obj));
+          }
+        });
+      }
+
+    }
+
 
     // add this option to the request
     answers.push(this.makeAnswer(o));
@@ -112,7 +171,8 @@ export class OptionBlockNestedComponent implements OnInit {
     // if unselected, clean up my kids
     if (!o.selected) {
 
-      const descendants = this.getDescendants([o]);
+      const descendants = this.getDescendants(o);
+      console.log("INSIDE CHANGECHECKBOX METHOD, LENGTH OF DESCENDANTS:  "+descendants.length);
 
       descendants.forEach(desc => {
         desc.selected = false;
@@ -185,26 +245,25 @@ export class OptionBlockNestedComponent implements OnInit {
       return desc;
     }
 
+    let maxStack = y.length;
+    let num = 0;
+
     y.forEach(x => {
+      num++;
       desc.push(...x.followups ?? []);
       desc.push(...x.options ?? []);
-      desc.push(...this.getDescendants(desc));
+      if (num > maxStack) {
+        desc.push(...this.getDescendants(y) ?? []);
+      }
     });
-
     return desc;
   }
 
-  /**
-   *
-   */
-  makeId(length) {
-    var result = '';
-    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    var charactersLength = characters.length;
-    for (var i = 0; i < length; i++) {
-      result += characters.charAt(Math.floor(Math.random() *
-        charactersLength));
+  catchSpace(e: Event, tag: string) {
+    let el = document.getElementById(tag);
+    let foundEl = el.closest('.div-shield');
+    if (foundEl) {
+      e.preventDefault();
     }
-    return result;
   }
 }
